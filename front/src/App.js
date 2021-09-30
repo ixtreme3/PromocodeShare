@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from "react";
 
 function Clock() {
   const [date, setDate] = useState(new Date());
@@ -11,14 +11,10 @@ function Clock() {
     const timerId = setInterval(refreshClock, 1000);
     return function cleanup() {
       clearInterval(timerId);
-    }
+    };
   }, []);
 
-  return (
-    <span>
-      {date.toLocaleTimeString()}
-    </span>
-  );
+  return <span>{date.toLocaleTimeString()}</span>;
 }
 
 function App() {
