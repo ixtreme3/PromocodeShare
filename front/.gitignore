@@ -148,3 +148,6 @@ sketch
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Exclude react-app-evd.ts file which generates every time the project is build
+/src/react-app-env.d.ts
