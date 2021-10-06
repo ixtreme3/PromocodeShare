@@ -1,28 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import styled from 'styled-components';
+import ButtonAppBar from './components/buttonAppBar';
+import { StyledEngineProvider } from '@material-ui/styled-engine-sc';
 
-function Clock() {
-  const [date, setDate] = useState(new Date());
-
-  function refreshClock() {
-    setDate(new Date());
-  }
-
-  useEffect(() => {
-    const timerId = setInterval(refreshClock, 1000);
-    return function cleanup() {
-      clearInterval(timerId);
-    };
-  }, []);
-
-  return <span>{date.toLocaleTimeString()}</span>;
-}
+const StyledButtonAppBar = styled(ButtonAppBar)`
+  color: black;
+  background-color: white;
+  height: 80px;
+`;
 
 function App() {
   return (
-    <div className="App">
-      <span>Hello world! It's </span>
-      <Clock />
-    </div>
+    <StyledEngineProvider injectFirst>
+      <div className="App">
+        <StyledButtonAppBar />
+      </div>
+    </StyledEngineProvider>
   );
 }
 
