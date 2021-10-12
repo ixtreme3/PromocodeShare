@@ -9,9 +9,9 @@ services:
     restart: always
     environment:
       - POSTGRES_PASSWORD=123
-      - POSTGRES_USER=selectel
-      - POSTGRES_DB=selectel
+      - POSTGRES_USER=123
+      - POSTGRES_DB=123
     volumes:
       - ./:/app
     ports:
-      - ${POSTGRES_PORT:-5432}:5432
+      - ${POSTGRES_PORT:-5432}:1234
