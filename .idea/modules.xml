@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/back/back.iml" filepath="$PROJECT_DIR$/back/back.iml" />
       <module fileurl="file://$PROJECT_DIR$/front/front.iml" filepath="$PROJECT_DIR$/front/front.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/promocodeshare.iml" filepath="$PROJECT_DIR$/.idea/promocodeshare.iml" />
     </modules>
   </component>
 </project>
