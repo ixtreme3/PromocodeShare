@@ -17,9 +17,8 @@ function App() {
         <Route path="/user/dashboard">
           <UserDashboard />
         </Route>
+        <Redirect exact from="/" to="/anonymous/dashboard" />
       </Switch>
-
-      <Redirect exact from="/" to="/anonymous/dashboard" />
     </Router>
   );
 }
