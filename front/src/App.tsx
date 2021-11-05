@@ -1,13 +1,29 @@
 import React from 'react';
-import ButtonAppBar from './components/buttonAppBar';
+import { AnonymousDashboard } from './components/AnonymousDashboard';
+import { AdminDashboard } from './components/AdminDashboard';
+import { UserDashboard } from './components/UserDashboard';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import Footer from './components/footer'
 
 function App() {
   return (
-    <div className="App">
-      <ButtonAppBar />
-      <Footer />
-    </div>
+    <Router>
+      <Switch>
+        <Route path="/anonymous/dashboard">
+          <AnonymousDashboard />
+          <Footer />
+        </Route>
+        <Route path="/admin/dashboard">
+          <AdminDashboard />
+          <Footer />
+        </Route>
+        <Route path="/user/dashboard">
+          <UserDashboard />
+          <Footer />
+        </Route>
+        <Redirect exact from="/" to="/anonymous/dashboard" />
+      </Switch>
+    </Router>
   );
 }
 
