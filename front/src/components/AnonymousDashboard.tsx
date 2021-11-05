@@ -1,6 +1,8 @@
 import * as React from 'react';
-import { AppBar, Box, Button, IconButton, Toolbar, Typography } from '@material-ui/core';
+import { AppBar, Button, IconButton, Toolbar, Typography } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
+import { CouponListWidget } from './CouponListWidget';
+import { Box } from '@mui/material';
 
 export const AnonymousDashboard: React.FC = () => (
   <Box sx={{ flexGrow: 1 }}>
@@ -15,5 +17,7 @@ export const AnonymousDashboard: React.FC = () => (
         <Button color="inherit">Login</Button>
       </Toolbar>
     </AppBar>
+
+    <CouponListWidget />
   </Box>
 );
