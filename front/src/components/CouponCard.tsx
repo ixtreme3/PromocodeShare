@@ -21,7 +21,7 @@ export const CouponCard: React.FC<any> = (props) => (
         {props.input.seller}
       </Typography>
     </Box>
-    <CardContent sx={{ minWidth: '175px' }}>
+    <CardContent sx={{ minWidth: '175px', borderLeft: 1, borderColor: 'grey.200' }}>
       <Typography gutterBottom variant="h5">
         {props.input.promoCodeName}
       </Typography>
