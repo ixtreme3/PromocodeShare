@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { CouponCard } from './CouponCard';
+import { api } from '../api/api';
+import { v4 as uuidv4 } from 'uuid';
 
 const outerDivStyles = {
   display: 'flex',
@@ -14,20 +16,13 @@ const innerDivStyles = {
 export const CouponListWidget: React.FC = () => {
   const [coupons, setCoupons] = useState([{}]);
 
-  useEffect(() => {
-    fetch('http://localhost:3000/data/coupons.json')
-      .then((response) => response.json())
-      .then((data) => setCoupons(data))
-      .catch((err) => {
-        console.log('Error reading data: ' + err);
-      });
-  }, []);
+  useEffect(() => api.fetchCoupons(setCoupons), []);
 
   return (
     <div style={outerDivStyles}>
       <div style={innerDivStyles}>
         {coupons.map((coupon) => (
-          <CouponCard input={coupon} />
+          <CouponCard key={uuidv4()} input={coupon} />
         ))}
       </div>
     </div>
