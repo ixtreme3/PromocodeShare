@@ -1,28 +1,29 @@
-import React, { useEffect, useState } from 'react';
-
-function Clock() {
-  const [date, setDate] = useState(new Date());
-
-  function refreshClock() {
-    setDate(new Date());
-  }
-
-  useEffect(() => {
-    const timerId = setInterval(refreshClock, 1000);
-    return function cleanup() {
-      clearInterval(timerId);
-    };
-  }, []);
-
-  return <span>{date.toLocaleTimeString()}</span>;
-}
+import React from 'react';
+import { AnonymousDashboard } from './components/AnonymousDashboard';
+import { AdminDashboard } from './components/AdminDashboard';
+import { UserDashboard } from './components/UserDashboard';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import Footer from './components/footer'
 
 function App() {
   return (
-    <div className="App">
-      <span>Hello world! It's </span>
-      <Clock />
-    </div>
+    <Router>
+      <Switch>
+        <Route path="/anonymous/dashboard">
+          <AnonymousDashboard />
+          <Footer />
+        </Route>
+        <Route path="/admin/dashboard">
+          <AdminDashboard />
+          <Footer />
+        </Route>
+        <Route path="/user/dashboard">
+          <UserDashboard />
+          <Footer />
+        </Route>
+        <Redirect exact from="/" to="/anonymous/dashboard" />
+      </Switch>
+    </Router>
   );
 }
 

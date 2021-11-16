@@ -8,10 +8,10 @@ services:
     image: postgres
     restart: always
     environment:
-      - POSTGRES_PASSWORD=selectel
+      - POSTGRES_PASSWORD=123
       - POSTGRES_USER=selectel
       - POSTGRES_DB=selectel
     volumes:
       - ./:/app
     ports:
-      - ${POSTGRES_PORT:-5432}:5432
+      - ${POSTGRES_PORT:-5433}:5432
