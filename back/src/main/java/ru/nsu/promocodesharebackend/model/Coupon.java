@@ -46,4 +46,16 @@ public class Coupon {
 
     @Value("false")
     private Boolean isArchive;
+
+    public Date getExpirationDate() {
+        return expirationDate;
+    }
+
+    public void setExpirationDate(Date expirationDate) {
+        this.expirationDate = expirationDate;
+    }
+
+    public void setArchive(Boolean archive) {
+        isArchive = archive;
+    }
 }
