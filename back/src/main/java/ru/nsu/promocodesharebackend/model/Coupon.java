@@ -14,7 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Entity
-@Table(name = "cupon")
+@Table(name = "coupon")
 public class Coupon {
 
     @Id
