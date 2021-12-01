@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from "react";
 import { AnonymousDashboard } from './components/AnonymousDashboard';
 import { AdminDashboard } from './components/AdminDashboard';
 import { UserDashboard } from './components/UserDashboard';
@@ -6,6 +6,9 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 import Footer from './components/footer'
 
 function App() {
+  useEffect(() => {
+    document.title = "Promocode Share"
+  }, [])
   return (
     <Router>
       <Switch>
