@@ -61,9 +61,9 @@
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-commons</artifactId>
-            <version>2.5.5</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
         </dependency>
 
     </dependencies>
@@ -73,6 +73,55 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${project.parent.version}</version>
+            </plugin>
+
+            <plugin>
+                <groupId>cz.habarta.typescript-generator</groupId>
+                <artifactId>typescript-generator-maven-plugin</artifactId>
+                <version>2.24.612</version>
+                <executions>
+                    <execution>
+                        <id>generate</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <phase>process-classes</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mapEnum>asEnum</mapEnum>
+                    <nonConstEnums>true</nonConstEnums>
+                    <mapDate>asNumber</mapDate>
+                    <optionalProperties>useSpecifiedAnnotations</optionalProperties>
+                    <jsonLibrary>jackson2</jsonLibrary>
+                    <classPatterns>
+                        <classPattern>ru.nsu.promocodesharebackend.dto.**</classPattern>
+                        <classPattern>ru.nsu.promocodesharebackend.controller.**</classPattern>
+                    </classPatterns>
+                    <customTypeMappings>
+                        <mapping>org.springframework.web.multipart.MultipartFile:File</mapping>
+                        <mapping>java.time.Instant:number</mapping>
+                    </customTypeMappings>
+                    <generateSpringApplicationClient>true</generateSpringApplicationClient>
+                    <extensions>
+                        <extension>cz.habarta.typescript.generator.ext.AxiosClientExtension</extension>
+                    </extensions>
+                    <optionalProperties>useSpecifiedAnnotations</optionalProperties>
+                    <outputKind>module</outputKind>
+                    <outputFileType>implementationFile</outputFileType>
+                    <outputFile>${project.basedir}/../front/src/api/${project.name}.ts
+                    </outputFile>
+                    <noFileComment>true</noFileComment>
+                    <sortDeclarations>true</sortDeclarations>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>cz.habarta.typescript-generator</groupId>
+                        <artifactId>typescript-generator-spring</artifactId>
+                        <version>2.24.612</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
