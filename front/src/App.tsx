@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
-import { AnonymousDashboard } from './components/AnonymousDashboard';
-import { AdminDashboard } from './components/AdminDashboard';
-import { UserDashboard } from './components/UserDashboard';
+import { AnonymousDashboard } from './components/dashboards/AnonymousDashboard';
+import { AdminDashboard } from './components/dashboards/AdminDashboard';
+import { UserDashboard } from './components/dashboards/UserDashboard';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-import Footer from './components/footer'
+import Footer from './components/footer';
+import { FriendsPage } from './components/pages/FriendsPage';
 
 function App() {
   useEffect(() => {
@@ -22,6 +23,10 @@ function App() {
         </Route>
         <Route path="/user/dashboard">
           <UserDashboard />
+          <Footer />
+        </Route>
+        <Route path="/user/friends">
+          <FriendsPage />
           <Footer />
         </Route>
         <Redirect exact from="/" to="/anonymous/dashboard" />
