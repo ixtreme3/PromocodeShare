@@ -32,6 +32,12 @@ public class CouponService {
         }
     }
 
+    public void saveCoupon(Coupon coupon){
+        if(coupon != null){
+            couponRepository.save(coupon);
+        }
+    }
+
     public List<Coupon> findAll() {
         return couponRepository.findAll();
     }

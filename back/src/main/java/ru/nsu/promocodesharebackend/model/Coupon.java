@@ -58,4 +58,8 @@ public class Coupon {
     public void setArchive(Boolean archive) {
         isArchive = archive;
     }
+
+    public String getCode() {
+        return code;
+    }
 }
