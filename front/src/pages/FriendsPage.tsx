@@ -2,9 +2,9 @@ import React from 'react';
 import { Box } from '@mui/material';
 import { AppBar, Button, IconButton, Toolbar, Typography } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import { NewCouponForm } from '../forms/NewCouponForm';
+import { FriendListWidget } from '../components/organizms/FriendListWidget';
 
-export const AdminDashboard: React.FC = () => (
+export const FriendsPage: React.FC = () => (
   <Box sx={{ flexGrow: 1 }}>
     <AppBar position="static">
       <Toolbar>
@@ -15,11 +15,11 @@ export const AdminDashboard: React.FC = () => (
           Promocode Share
         </Typography>
         <Typography variant="h6" component="div" sx={{ marginLeft: '10px', flexGrow: 1 }}>
-          Admin dashboard
+          Friends
         </Typography>
-        <NewCouponForm />
         <Button color="inherit">Login</Button>
       </Toolbar>
     </AppBar>
+    <FriendListWidget />
   </Box>
 );

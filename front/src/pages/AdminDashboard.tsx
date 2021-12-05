@@ -1,11 +1,10 @@
-import * as React from 'react';
+import React from 'react';
+import { Box } from '@mui/material';
 import { AppBar, Button, IconButton, Toolbar, Typography } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import { CouponListWidget } from '../widgets/CouponListWidget';
-import { Box } from '@mui/material';
-import { NewCouponForm } from '../forms/NewCouponForm';
+import { NewCouponForm } from '../components/molecules/NewCouponForm';
 
-export const AnonymousDashboard: React.FC = () => (
+export const AdminDashboard: React.FC = () => (
   <Box sx={{ flexGrow: 1 }}>
     <AppBar position="static">
       <Toolbar>
@@ -16,12 +15,11 @@ export const AnonymousDashboard: React.FC = () => (
           Promocode Share
         </Typography>
         <Typography variant="h6" component="div" sx={{ marginLeft: '10px', flexGrow: 1 }}>
-          Anonymous dashboard
+          Admin dashboard
         </Typography>
         <NewCouponForm />
         <Button color="inherit">Login</Button>
       </Toolbar>
     </AppBar>
-    <CouponListWidget />
   </Box>
 );
