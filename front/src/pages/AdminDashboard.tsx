@@ -2,7 +2,7 @@ import React from 'react';
 import { Box } from '@mui/material';
 import { AppBar, Button, IconButton, Toolbar, Typography } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import { NewCouponForm } from '../forms/NewCouponForm';
+import { NewCouponForm } from '../components/molecules/NewCouponForm';
 
 export const AdminDashboard: React.FC = () => (
   <Box sx={{ flexGrow: 1 }}>

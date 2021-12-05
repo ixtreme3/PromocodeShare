@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { api } from '../../api/api';
 import { v4 as uuidv4 } from 'uuid';
-import { FriendCard } from '../cards/FriendCard';
+import { FriendCard } from '../molecules/FriendCard';
 import { Grid } from '@mui/material';
 
 const outerDivStyles = {

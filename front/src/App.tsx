@@ -1,15 +1,16 @@
 import React, { useEffect } from "react";
-import { AnonymousDashboard } from './components/dashboards/AnonymousDashboard';
-import { AdminDashboard } from './components/dashboards/AdminDashboard';
-import { UserDashboard } from './components/dashboards/UserDashboard';
+import { AnonymousDashboard } from './pages/AnonymousDashboard';
+import { AdminDashboard } from './pages/AdminDashboard';
+import { UserDashboard } from './pages/UserDashboard';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-import Footer from './components/footer';
-import { FriendsPage } from './components/pages/FriendsPage';
+import Footer from './components/atoms/footer';
+import { FriendsPage } from './pages/FriendsPage';
 
 function App() {
   useEffect(() => {
     document.title = "Promocode Share"
   }, [])
+
   return (
     <Router>
       <Switch>

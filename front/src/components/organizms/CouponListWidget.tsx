@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { CouponCard } from '../cards/CouponCard';
+import { CouponCard } from '../molecules/CouponCard';
 import { api } from '../../api/api';
 import { v4 as uuidv4 } from 'uuid';
 

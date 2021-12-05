@@ -1,12 +1,13 @@
-import React from 'react';
-import { Box } from '@mui/material';
+import * as React from 'react';
 import { AppBar, Button, IconButton, Toolbar, Typography } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import { FriendListWidget } from '../widgets/FriendListWidget';
+import { CouponListWidget } from '../components/organizms/CouponListWidget';
+import { Box } from '@mui/material';
+import { NewCouponForm } from '../components/molecules/NewCouponForm';
 
-export const FriendsPage: React.FC = () => (
+export const AnonymousDashboard: React.FC = () => (
   <Box sx={{ flexGrow: 1 }}>
-    <AppBar position="static">
+    <AppBar position="sticky">
       <Toolbar>
         <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
           <MenuIcon />
@@ -15,11 +16,12 @@ export const FriendsPage: React.FC = () => (
           Promocode Share
         </Typography>
         <Typography variant="h6" component="div" sx={{ marginLeft: '10px', flexGrow: 1 }}>
-          Friends
+          Anonymous dashboard
         </Typography>
+        <NewCouponForm />
         <Button color="inherit">Login</Button>
       </Toolbar>
     </AppBar>
-    <FriendListWidget />
+    <CouponListWidget />
   </Box>
 );
