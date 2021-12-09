@@ -5,20 +5,27 @@ import org.springframework.stereotype.Service;
 import ru.nsu.promocodesharebackend.DTO.CouponDTO;
 import ru.nsu.promocodesharebackend.model.Coupon;
 import ru.nsu.promocodesharebackend.model.Shop;
+import ru.nsu.promocodesharebackend.model.User;
 import ru.nsu.promocodesharebackend.repository.CouponRepository;
 import ru.nsu.promocodesharebackend.repository.ShopRepository;
+import ru.nsu.promocodesharebackend.repository.UserRepository;
+
+import java.util.Optional;
 
 @Service
 public class CouponMapper {
 
     private final ShopRepository shopRepository;
     private final CouponRepository couponRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     public CouponMapper(ShopRepository shopRepository,
-                        CouponRepository couponRepository) {
+                        CouponRepository couponRepository,
+                        UserRepository userRepository) {
         this.shopRepository = shopRepository;
         this.couponRepository = couponRepository;
+        this.userRepository = userRepository;
     }
 
     public CouponDTO fromEntity(Coupon coupon){
@@ -43,9 +50,14 @@ public class CouponMapper {
         coupon.setCode(couponDTO.getCode());
         coupon.setDescription(couponDTO.getDescription());
         coupon.setExpirationDate(couponDTO.getExpirationDate());
-        coupon.setUser(null);
-        coupon.setIsArchive(false);
-        coupon.setIsDeleted(false);
+        Long userId = couponDTO.getUserId();
+        Optional<User> userOptional = Optional.empty();
+        if (userId != null) {
+            userOptional = userRepository.findById(userId);
+        }
+        coupon.setUser(userOptional.isPresent() ? userOptional.get() : null);
+        coupon.setIsArchive(couponDTO.getIsArchive() != null ? couponDTO.getIsArchive() : false);
+        coupon.setIsDeleted(couponDTO.getIsDeleted() != null ? couponDTO.getIsDeleted() : false);
 
         return coupon;
     }

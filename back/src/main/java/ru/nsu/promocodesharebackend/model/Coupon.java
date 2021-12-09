@@ -19,7 +19,7 @@ import java.util.Date;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Entity
-@Table(name = "coupon")
+@Table(name = "coupon", schema = "public")
 public class Coupon {
 
     @Id

@@ -34,10 +34,10 @@ public class CouponController {
 
 
 
-    /*@GetMapping("/{id}")
-    public Coupon findById(@PathVariable("id") Integer id) {
-        return service.getById(id);
-    }*/
+    @GetMapping("/{id}")
+    public Coupon findById(@PathVariable("id") Long id) {
+        return service.findById(id);
+    }
 
     @PostMapping
     public Coupon create(@Valid @RequestBody CouponDTO couponDTO){
@@ -45,14 +45,15 @@ public class CouponController {
         return service.create(coupon);
     }
 
-    /*@PutMapping("/{id}")
-    public Coupon update(@PathVariable Integer id,@Valid  @RequestBody Coupon coupon){
-        return service.update(id, coupon);
-    }*/
+    @PutMapping("/{id}")
+    public Coupon update(@PathVariable Long id,@Valid  @RequestBody CouponDTO couponDTO){
+        //Coupon coupon = couponMapper.toEntity(couponDTO);
+        return service.update(id, couponDTO);
+    }
 
-    /*@DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") Integer id){
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable("id") Long id){
         service.deleteById(id);
         return "Deleted";
-    }*/
+    }
 }

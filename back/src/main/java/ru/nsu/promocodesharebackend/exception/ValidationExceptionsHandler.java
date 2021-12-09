@@ -25,6 +25,6 @@ public class ValidationExceptionsHandler {
         } catch (NullPointerException e){
             validationErrorMessage = "validation error";
         }
-        return new ResponseEntity<>(validationErrorMessage, HttpStatus.UNPROCESSABLE_ENTITY);
+        return new ResponseEntity<>(validationErrorMessage, HttpStatus.BAD_REQUEST);
     }
 }

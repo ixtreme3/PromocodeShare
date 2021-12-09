@@ -16,7 +16,7 @@ import java.util.Date;
 @Data
 public class CouponDTO {
 
-    //private Long id;
+    private Long id;
 
     @NotNull(message = "Please enter the coupon shop id")
     private Long shopId;

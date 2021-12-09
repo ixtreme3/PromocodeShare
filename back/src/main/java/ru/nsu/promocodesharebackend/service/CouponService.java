@@ -13,6 +13,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CouponService {
@@ -55,6 +56,7 @@ public class CouponService {
         Root<Coupon> root = query.from(Coupon.class);
 
         //query.orderBy(builder.asc(root.get("name")));
+        query.where(builder.equal(root.get("isDeleted"), false));
 
         query.distinct(true);
         List<Coupon> result = em
@@ -67,5 +69,32 @@ public class CouponService {
         em.close();
 
         return result;
+    }
+
+    public Coupon findById(Long id) {
+        return couponRepository.findById(id).get();
+    }
+
+    public Coupon update(Long id, CouponDTO newCouponDTO) {
+        Optional<Coupon> storedCouponOptional = couponRepository.findById(id);
+        if (storedCouponOptional.isEmpty()) {
+            return null;
+        }
+      Coupon storedCoupon = storedCouponOptional.get();
+//        Coupon storedCoupon = couponRepository.getById(id);;
+        //storedCoupon.setShop(newCoupon.getShop());
+        //storedCoupon.setCode(newCoupon.getCode());
+        storedCoupon.setName(newCouponDTO.getName());
+        //storedCoupon.setUser(newCoupon.getUser());
+        storedCoupon.setDescription(newCouponDTO.getDescription());
+        storedCoupon.setExpirationDate(newCouponDTO.getExpirationDate());
+        //storedCoupon.setIsArchive(newCoupon.getIsArchive());
+        //storedCoupon.setIsDeleted(newCoupon.getIsDeleted());
+
+        return  couponRepository.save(storedCoupon);
+    }
+
+    public void deleteById(Long id) {
+        couponRepository.deleteById(id);
     }
 }
