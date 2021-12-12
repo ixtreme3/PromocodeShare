@@ -43,6 +43,35 @@ export class RestApplicationClient<O> {
       options: options,
     });
   }
+
+  /**
+   * HTTP DELETE /coupon/{id}
+   * Java method: ru.nsu.promocodesharebackend.controller.CouponController.delete
+   */
+  delete(id: number, options?: O): RestResponse<string> {
+    return this.httpClient.request({ method: 'DELETE', url: uriEncoding`coupon/${id}`, options: options });
+  }
+
+  /**
+   * HTTP GET /coupon/{id}
+   * Java method: ru.nsu.promocodesharebackend.controller.CouponController.findById
+   */
+  findById(id: number, options?: O): RestResponse<Coupon> {
+    return this.httpClient.request({ method: 'GET', url: uriEncoding`coupon/${id}`, options: options });
+  }
+
+  /**
+   * HTTP PUT /coupon/{id}
+   * Java method: ru.nsu.promocodesharebackend.controller.CouponController.update
+   */
+  update(id: number, couponDTO: CouponDTO, options?: O): RestResponse<Coupon> {
+    return this.httpClient.request({
+      method: 'PUT',
+      url: uriEncoding`coupon/${id}`,
+      data: couponDTO,
+      options: options,
+    });
+  }
 }
 
 export interface Coupon {
@@ -59,6 +88,7 @@ export interface CouponDTO {
   code: string;
   description: string;
   expirationDate: DateAsNumber;
+  id: number;
   isArchive: boolean;
   isDeleted: boolean;
   name: string;
