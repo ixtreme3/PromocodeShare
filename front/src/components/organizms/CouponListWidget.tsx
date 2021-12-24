@@ -15,7 +15,7 @@ const innerDivStyles = {
   flexBasis: '60%',
 };
 
-const api: AxiosRestApplicationClient = new AxiosRestApplicationClient('http://localhost:8080/');
+const api: AxiosRestApplicationClient = new AxiosRestApplicationClient('http://promocodeshare.net:8080'); // тут именно http
 
 export const CouponListWidget: React.FC = () => {
   const [coupons, setCoupons] = useState([{}]);

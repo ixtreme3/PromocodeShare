@@ -5,23 +5,27 @@ import { CouponListWidget } from '../components/organizms/CouponListWidget';
 import { Box } from '@mui/material';
 import { NewCouponForm } from '../components/molecules/NewCouponForm';
 
-export const AnonymousDashboard: React.FC = () => (
-  <Box sx={{ flexGrow: 1 }}>
-    <AppBar position="static">
-      <Toolbar>
-        <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
-          <MenuIcon />
-        </IconButton>
-        <Typography variant="h6" component="div" sx={{ fontWeight: 'bold' }}>
-          Promocode Share
-        </Typography>
-        <Typography variant="h6" component="div" sx={{ marginLeft: '10px', flexGrow: 1 }}>
-          Anonymous dashboard
-        </Typography>
-        <NewCouponForm />
-        <Button color="inherit">Login</Button>
-      </Toolbar>
-    </AppBar>
-    <CouponListWidget />
-  </Box>
-);
+export const AnonymousDashboard: React.FC = () => {
+  return (
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" component="div" sx={{ fontWeight: 'bold' }}>
+            Promocode Share
+          </Typography>
+          <Typography variant="h6" component="div" sx={{ marginLeft: '10px', flexGrow: 1 }}>
+            Anonymous dashboard
+          </Typography>
+          <NewCouponForm />
+          <Button href="http://promocodeshare.net:8080/oauth2/authorization/vk" color="inherit">
+            Login
+          </Button>
+        </Toolbar>
+      </AppBar>
+      <CouponListWidget />
+    </Box>
+  );
+};
