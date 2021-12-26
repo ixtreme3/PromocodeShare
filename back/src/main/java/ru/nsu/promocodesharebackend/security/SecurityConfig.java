@@ -1,5 +1,6 @@
 package ru.nsu.promocodesharebackend.security;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -22,11 +23,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
-                .antMatcher("/**")
-                .authorizeRequests(a -> a
-                        .antMatchers("/", "/error", "/webjars/**").permitAll()
-                        .anyRequest().authenticated()
-                )
+                .authorizeRequests()
+                    .antMatchers(HttpMethod.GET, "/", "/coupon/{id}", "/coupon").permitAll()
+                    .anyRequest().authenticated()
+                    .and()
                 .exceptionHandling(e -> e
                         .authenticationEntryPoint(new HttpStatusEntryPoint(UNAUTHORIZED))
                 )
