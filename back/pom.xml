@@ -106,7 +106,8 @@
                     </classPatterns>
                     <customTypeMappings>
                         <mapping>org.springframework.web.multipart.MultipartFile:File</mapping>
-                        <mapping>java.time.Instant:number</mapping>
+                        <mapping>java.time.Instant:string</mapping>
+                        <mapping>java.util.Date:string</mapping>
                     </customTypeMappings>
                     <generateSpringApplicationClient>true</generateSpringApplicationClient>
                     <extensions>
