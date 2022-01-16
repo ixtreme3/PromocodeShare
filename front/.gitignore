@@ -42,7 +42,7 @@
 # .idea/modules.xml
 # .idea/*.iml
 # .idea/modules
-# *.iml
+*.iml
 # *.ipr
 
 # CMake
@@ -148,3 +148,9 @@ sketch
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Exclude react-app-evd.ts file which generates every time the project is build
+/src/react-app-env.d.ts
+
+# Excluded package-lock.json because it creates conflicts with heroku. Please use yarn instead of npm.
+package-lock.json
