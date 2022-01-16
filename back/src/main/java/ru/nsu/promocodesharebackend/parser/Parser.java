@@ -1,20 +1,21 @@
 package ru.nsu.promocodesharebackend.parser;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Component;
-import ru.nsu.promocodesharebackend.PromocodeShareBackendApplication;
 import ru.nsu.promocodesharebackend.model.Coupon;
 import ru.nsu.promocodesharebackend.model.Shop;
-import ru.nsu.promocodesharebackend.model.User;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Component
@@ -22,6 +23,11 @@ public class Parser {
 
     static final Logger log =
             LoggerFactory.getLogger(Parser.class);
+
+    //private PikabuShopsConnection pikabuShopsConnection;
+
+    @Autowired
+    private ConnectionResponseService connectionResponseService;
 
     public List<Shop> parsePikabuShops(String categoriesURL , String shopsURL){
 
@@ -47,8 +53,7 @@ public class Parser {
             e.printStackTrace();
         }
 
-        List<Shop> shops = shopsMap.values().stream().toList();
-        return  shops;
+        return  shopsMap.values().stream().toList();
     }
 
     private void parseShopsFromCategoriesPikabu(Document page, Map<String, Shop> shopsMap) {
@@ -112,7 +117,7 @@ public class Parser {
     }
 
 
-    private Element getCategoriesTable(Document page) throws IOException {
+    private Element getCategoriesTable(Document page)  {
         Element categoryListContainer = page.select("div[class=\"promocod-home catalog-list\"]").get(0);
         return categoryListContainer.selectFirst("div[class=\"row\"]");
     }
@@ -126,7 +131,12 @@ public class Parser {
            log.info("[PARSER]:"+ counter+"/"+maxCounter +" Parsing pikabu "+ shop.getName() +" shop...");
             counter++;
             try {
-                Document shopPage = Jsoup.connect(shop.getHref()).get();
+                /*try {
+                    Thread.sleep((long)(Math.random() * 1000));// сайт ругается на слишком большое количество запросов
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }*/
+                Document shopPage = Jsoup.connect(shop.getHref()).userAgent("Mozilla").get();
                 Elements promocodesElements = shopPage
                         .selectFirst("div[class=\"tovars\"]")
                         .select("div[class=\"item-tovars\"]");
@@ -193,8 +203,153 @@ public class Parser {
             catch (NullPointerException e) {
                 log.info("No active coupons");
             }
+
             //log.info("Done");
         }
         return coupons;
     }
+
+
+    public AbstractMap.SimpleEntry<List<Coupon>, String> parsePikabuCouponsAndShopImageUrl(Shop shop) {
+        List<Coupon> coupons = new ArrayList<>();
+        String shopImageUrl = null;
+        try {
+
+            Document shopPage = connectionResponseService
+                    .executeConnection(
+                            shop.getHref(),
+                            shop.getHref(),
+                            Connection.Method.GET)
+                    .parse();
+
+            shopImageUrl = shopPage
+                    .selectFirst("div[class=\"right-content\"]")
+                    .selectFirst("img[class=\"lazyload\"]")
+                    .attr("src");
+
+            Elements promocodesElements = shopPage
+                    .selectFirst("div[class=\"tovars\"]")
+                    .select("article[class=\"item-tovars\"]");
+
+            for (Element promocodeElement : promocodesElements) {
+
+                String promocodeType = promocodeElement
+                        .selectFirst("div[class=\"open-tovar\"]")
+                        .selectFirst("a")
+                        .attr("class");
+
+
+                // это промокод, а не акция
+                if (promocodeType.equals("o open-coupon")) {
+
+                    /**
+                     * Get coupon code
+                     */
+                    String promocodeHrefAdd = promocodeElement //href="#cSboaRfsoRkp1", need "SboaRfsoRkp1"
+                            .selectFirst("div[class=\"open-tovar\"]")
+                            .selectFirst("a")
+                            .attr("href")
+                            .substring(2);
+                    String shopTempHref = shop.getHref().replace("shops", "coupon");
+
+                    String couponResponse = connectionResponseService
+                            .executeConnection(
+                                    shopTempHref +"/"+ promocodeHrefAdd,
+                                    shop.getHref(),
+                                    Connection.Method.POST).body();
+
+                    JSONObject couponJSON;
+                    try { //404 ошибка с пустым json-ответом
+                        couponJSON = new JSONObject(couponResponse);
+                    } catch (JSONException e) {
+                        System.err.println(e.getMessage());
+                        continue;
+                    }
+                    String couponCode =  couponJSON.getString("promocode");
+
+                    /** Expiration date */
+                    String[] expirationDateText = promocodeElement
+                            .selectFirst("div[class=\"tovav-content\"]")
+                            .selectFirst("p[class=\"data\"]")
+                            .text()
+                            .split(" ");
+                    String[] expirationDateStrings = expirationDateText[expirationDateText.length - 1]
+                            .split("\\.");
+
+                    int day = Integer.parseInt(expirationDateStrings[0]) ; //A year y is represented by the integer y - 1900.
+                    int month = Integer.parseInt(expirationDateStrings[1]) - 1;//Calendar.January = 0
+                    int year = Integer.parseInt(expirationDateStrings[2]) - 1900;
+                    Date expirationDate = new Date(year, month, day);
+
+                    /** Coupon name */
+                    String couponName = promocodeElement
+                            .selectFirst("div[class=\"tovav-content\"]")
+                            .selectFirst("a[class=\"click-coupon o\"]")
+                            .text();
+
+                    /** Coupon description */
+                    String couponDescription = promocodeElement
+                            .selectFirst("div[class=\"tovav-content\"]")
+                            .selectFirst("p:not([class])")
+                            .text();
+
+                    /** Coupon */
+                    Coupon coupon = new Coupon();
+
+                    coupon.setUser(null);
+                    coupon.setCode(couponCode);
+                    coupon.setExpirationDate(expirationDate);
+                    coupon.setDescription(couponDescription);
+                    coupon.setName(couponName);
+                    coupon.setShop(shop);
+                    coupon.setIsArchive(false);
+                    coupon.setIsDeleted(false);
+
+                    coupons.add(coupon);
+
+                }
+            }
+
+        }
+        //nullPointer из shopPage.selectFirst("div[class=\"tovars\"]"),
+        // т.к. может не быть активных купонов
+        catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e) {
+            log.info("No active coupons");
+        }
+
+        //log.info("Done");
+        return new AbstractMap.SimpleEntry<>(coupons, shopImageUrl);
+    }
+
+
+    public void testCouponCode() {
+        try {
+                /*try {
+                    Thread.sleep((long)(Math.random() * 1000));// сайт ругается на слишком большое количество запросов
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }*/
+            Document shopPage = Jsoup.connect("https://promokod.pikabu.ru/shops/mvideo#cSboaRfsoRkp1").userAgent("Mozilla").get();
+            Element code = shopPage
+                    .selectFirst("a[href=\"#cSboaRfsoRkp1\"][class=\"o open-coupon\"]");
+                    //.selectFirst("span[class=\"stars\"]");
+
+            System.out.println(code.toString());
+
+
+        }
+        //nullPointer из shopPage.selectFirst("div[class=\"tovars\"]"),
+        // т.к. может не быть активных купонов
+        catch (IOException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e) {
+            log.info("No active coupons");
+        }
+    }
+
+
+
 }
+

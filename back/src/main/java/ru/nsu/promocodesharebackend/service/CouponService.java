@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.nsu.promocodesharebackend.DTO.CouponDTO;
 import ru.nsu.promocodesharebackend.model.Coupon;
+import ru.nsu.promocodesharebackend.model.Shop;
 import ru.nsu.promocodesharebackend.repository.CouponRepository;
 
 import javax.persistence.EntityManager;
@@ -34,11 +35,13 @@ public class CouponService {
     }
 
     public void saveCoupons(List<Coupon> coupons){
-        if (coupons != null) {
+        if (!coupons.isEmpty()) {
             couponRepository.saveAll(coupons);
             couponRepository.flush();
         }
     }
+
+
 
     public Coupon create(Coupon coupon) {
         return couponRepository.save(coupon);
@@ -96,5 +99,20 @@ public class CouponService {
 
     public void deleteById(Long id) {
         couponRepository.deleteById(id);
+    }
+
+    public void updateParsedCoupons(List<Coupon> coupons) {
+        for (Coupon parsedCoupon : coupons) {
+            Optional<Coupon> storedCouponOptional = couponRepository.findByCodeAndName(parsedCoupon.getCode(), parsedCoupon.getName());
+            if (storedCouponOptional.isPresent()){
+                Coupon storedCoupon = storedCouponOptional.get();
+                storedCoupon.setDescription(parsedCoupon.getDescription());
+                storedCoupon.setExpirationDate(parsedCoupon.getExpirationDate());
+                couponRepository.save(storedCoupon);
+            } else {
+                couponRepository.save(parsedCoupon);
+            }
+
+        }
     }
 }

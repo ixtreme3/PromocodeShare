@@ -29,4 +29,7 @@ public class Shop {
 
     @Column(columnDefinition = "text", nullable = false)
     private String category; //(категория магазина)
+
+    @Column(columnDefinition = "text")
+    private String imageURL; // URL картинки магазина
 }
