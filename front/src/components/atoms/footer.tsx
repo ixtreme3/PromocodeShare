@@ -1,4 +1,4 @@
-import { AppBar, Container, Toolbar, Typography } from "@material-ui/core";
+import { AppBar, Container, Toolbar, Typography } from '@material-ui/core';
 
 export default function Footer() {
   return (
@@ -11,5 +11,5 @@ export default function Footer() {
         </Toolbar>
       </Container>
     </AppBar>
-  )
+  );
 }
