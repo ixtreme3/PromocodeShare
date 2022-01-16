@@ -7,7 +7,7 @@ import { NewCouponForm } from './NewCouponForm';
 
 export const AnonymousDashboard: React.FC = () => (
   <Box sx={{ flexGrow: 1 }}>
-    <AppBar position="static">
+    <AppBar position="sticky">
       <Toolbar>
         <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
           <MenuIcon />
