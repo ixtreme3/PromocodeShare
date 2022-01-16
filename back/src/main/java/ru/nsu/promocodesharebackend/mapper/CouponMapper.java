@@ -2,13 +2,13 @@ package ru.nsu.promocodesharebackend.mapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.nsu.promocodesharebackend.DTO.CouponDTO;
 import ru.nsu.promocodesharebackend.model.Coupon;
 import ru.nsu.promocodesharebackend.model.Shop;
 import ru.nsu.promocodesharebackend.model.User;
 import ru.nsu.promocodesharebackend.repository.CouponRepository;
 import ru.nsu.promocodesharebackend.repository.ShopRepository;
 import ru.nsu.promocodesharebackend.repository.UserRepository;
+import ru.nsu.promocodesharebackend.DTO.CouponDTO;
 
 import java.util.Optional;
 
