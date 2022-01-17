@@ -3,7 +3,7 @@ import { CouponCard } from '../molecules/CouponCard';
 import { v4 as uuidv4 } from 'uuid';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { BeatLoader } from 'react-spinners';
-import { AxiosRestApplicationClient } from '../../api/PromocodeShareBackend';
+import { Api } from '../../api/api';
 
 const outerDivStyles = {
   display: 'flex',
@@ -15,16 +15,14 @@ const innerDivStyles = {
   flexBasis: '60%',
 };
 
-const api: AxiosRestApplicationClient = new AxiosRestApplicationClient('http://localhost:8080/');
-
 export const CouponListWidget: React.FC = () => {
   const [coupons, setCoupons] = useState([{}]);
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    api
-      .findAllPaged({ page: 1, rowsPerPage: 10 })
-      .then((response) => setCoupons((prevCoupons) => [...prevCoupons, ...response.data]));
+    Api.findAllPaged({ page: 1, rowsPerPage: 10 }).then((response) =>
+      setCoupons((prevCoupons) => [...prevCoupons, ...response.data])
+    );
   }, [page]);
 
   return (

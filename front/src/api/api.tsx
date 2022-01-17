@@ -1,3 +1,5 @@
+import { AxiosRestApplicationClient } from './PromocodeShareBackend';
+
 export const api = {
   fetchCompanies(setCompanyList: (value: ((prevState: string[]) => string[]) | string[]) => void) {
     fetch('../data/companies.json')
@@ -26,3 +28,5 @@ export const api = {
       });
   },
 };
+
+export const Api: AxiosRestApplicationClient = new AxiosRestApplicationClient('http://promocodeshare.net:8080'); // тут именно http

@@ -77,7 +77,7 @@ export class RestApplicationClient<O> {
 export interface Coupon {
   code: string;
   description: string;
-  expirationDate: DateAsNumber;
+  expirationDate: string;
   id: number;
   name: string;
   shop: Shop;
@@ -87,7 +87,7 @@ export interface Coupon {
 export interface CouponDTO {
   code: string;
   description: string;
-  expirationDate: DateAsNumber;
+  expirationDate: string;
   id: number;
   isArchive: boolean;
   isDeleted: boolean;
@@ -100,6 +100,7 @@ export interface Shop {
   category: string;
   href: string;
   id: number;
+  imageURL: string;
   name: string;
   title: string;
 }
@@ -109,8 +110,6 @@ export interface User {
   name: string;
   vkLink: string;
 }
-
-export type DateAsNumber = number;
 
 export type RestResponse<R> = Promise<Axios.GenericAxiosResponse<R>>;
 
