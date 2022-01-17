@@ -8,9 +8,9 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useEffect, useState } from 'react';
 import MenuItem from '@mui/material/MenuItem';
-import { api as fakeAPI } from '../../api/api';
+import { Api, api as fakeAPI } from '../../api/api';
 import { v4 as uuidv4 } from 'uuid';
-import { AxiosRestApplicationClient, CouponDTO } from '../../api/PromocodeShareBackend';
+import { CouponDTO } from '../../api/PromocodeShareBackend';
 
 const emptyFormState = {
   shopId: 0,
@@ -21,8 +21,6 @@ const emptyFormState = {
   seller: '',
   image: '',
 };
-
-const api: AxiosRestApplicationClient = new AxiosRestApplicationClient('http://promocodeshare.net:8080'); // тут именно http
 
 export const NewCouponForm: React.FC = () => {
   const [open, setOpen] = useState(false);
@@ -55,7 +53,7 @@ export const NewCouponForm: React.FC = () => {
     };
 
     console.log(coupon);
-    api.create(coupon).then((r) => console.log(r.data)); // что тут с промисом делать?
+    Api.create(coupon).then((r) => console.log(r.data)); // что тут с промисом делать?
     handleClose();
   };
 
