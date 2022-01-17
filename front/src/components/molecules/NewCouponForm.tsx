@@ -8,7 +8,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useEffect, useState } from 'react';
 import MenuItem from '@mui/material/MenuItem';
-import { api } from '../api/api';
+import { api } from '../../api/api';
 import { v4 as uuidv4 } from 'uuid';
 
 const emptyFormState = { seller: '', couponName: '', couponDescription: '', couponCode: '', image: '' };
