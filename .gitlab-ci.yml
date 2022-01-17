@@ -17,8 +17,8 @@ deploy:
   image: node:14
   stage: deploy
   script:
-    - git subtree push --prefix front https://heroku:a1121d9d-d418-4597-8b0c-fa46b2f8431c@git.heroku.com/promocode-share.git master
-    - git subtree push --prefix back https://heroku:3187a5e2-b570-4890-873b-85937180c4a8@git.heroku.com/promocodeshare-backend.git master
+    - git subtree push --force --prefix front https://heroku:a1121d9d-d418-4597-8b0c-fa46b2f8431c@git.heroku.com/promocode-share.git master
+    - git subtree push --force --prefix back https://heroku:3187a5e2-b570-4890-873b-85937180c4a8@git.heroku.com/promocodeshare-backend.git master
   only:
     - develop
 
