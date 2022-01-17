@@ -11,28 +11,28 @@ export const CouponCard: React.FC<any> = (props) => (
       <CardMedia
         component="img"
         sx={{ width: '175px', objectFit: 'contain', flex: 1 }}
-        image={props.input.picture}
+        image={props.input.picture !== undefined ? props.input.picture : 'https://bit.ly/3DH983u'}
         alt="Failed to load picture"
       />
       <Typography variant="body2" color="text.secondary" align={'center'}>
         Продавец:
       </Typography>
       <Typography variant="body2" color="text.secondary" align={'center'}>
-        {props.input.seller}
+        {props.input.shop.name}
       </Typography>
     </Box>
     <CardContent sx={{ minWidth: '175px', borderLeft: 1, borderColor: 'grey.200' }}>
       <Typography gutterBottom variant="h5">
-        {props.input.promoCodeName}
+        {props.input.name}
       </Typography>
       <Typography variant="body2" color="text.secondary">
-        {props.input.promoCodeDescription}
+        {props.input.description}
       </Typography>
       <Typography sx={{ marginTop: '15px' }} variant="body2" color="text.primary">
         Чтобы воспользоваться предложением скопируйте промокод:
       </Typography>
       <Typography sx={{ marginTop: '5px' }} variant="h5">
-        {props.input.promoCode}
+        {props.input.code}
       </Typography>
     </CardContent>
   </Card>
